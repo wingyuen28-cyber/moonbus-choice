@@ -137,7 +137,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 2,
@@ -272,7 +331,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 3,
@@ -407,7 +525,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 4,
@@ -542,7 +719,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 5,
@@ -677,7 +913,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 6,
@@ -812,7 +1107,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 7,
@@ -947,7 +1301,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 8,
@@ -1082,7 +1495,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 9,
@@ -1217,7 +1689,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 10,
@@ -1352,7 +1883,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     },
     {
       "race_number": 11,
@@ -1487,7 +2077,66 @@
           "weight": "118",
           "trainer": "姚本輝"
         }
-      ]
+      ],
+      "summary_recommendations": {
+        "solid": [
+          "1號 一生好彩",
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗"
+        ],
+        "heavy_market": [
+          "2號 超勁赤兔",
+          "3號 友瑩仁",
+          "4號 同樣美麗",
+          "5號 風火輪"
+        ],
+        "outsiders": [
+          "13號 星火燎原",
+          "14號 皇仁歡星"
+        ]
+      },
+      "featured_horse": {
+        "number": "1",
+        "name": "一生好彩",
+        "trainer": {
+          "name": "廖康銘",
+          "score": 85,
+          "note": "廖康銘 近期勝率穩定，今場部署精準。"
+        },
+        "track_env": {
+          "score": 88,
+          "note": "-- 檔出賽，佔有地利優勢。"
+        },
+        "jockey": {
+          "name": "周俊樂 (-2)",
+          "score": 90,
+          "note": "周俊樂 (-2) 與 廖康銘 合作默契極佳。"
+        },
+        "horse_status": {
+          "status_tag": "狀態大勇",
+          "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
+        },
+        "odds_dimension": {
+          "total_score": 92,
+          "t1": {
+            "value": "12.0 ➔ 9.5",
+            "score": 75
+          },
+          "t2": {
+            "value": "9.5 ➔ 6.0",
+            "score": 88
+          },
+          "t3": {
+            "value": "6.0 ➔ 3.8",
+            "score": 95
+          },
+          "cross_compare": {
+            "value": "賠率急瀉: -68.3%",
+            "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
+          }
+        }
+      }
     }
   ]
 }
