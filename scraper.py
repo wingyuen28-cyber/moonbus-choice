@@ -1,269 +1,111 @@
-import json
-import requests
-from bs4 import BeautifulSoup
-import re
-import os
+import json, os
+from datetime import datetime
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-}
-
-BASE_URL = "https://racing.hkjc.com/racing/info/meeting/Racecard/chinese/Local/"
-
-def get_soup(url):
-    try:
-        res = requests.get(url, headers=HEADERS, timeout=15)
-        res.encoding = 'utf-8'
-        if res.status_code == 200:
-            return BeautifulSoup(res.text, 'html.parser')
-    except Exception as e:
-        print(f"網絡請求失敗 ({url}): {e}")
-    return None
-
-def generate_6_dimensions(horses, r_no):
-    """根據排位資料自動計算並生成 6 大維度分析及智能推薦"""
-    if not horses:
-        return {
-            "summary_recommendations": {"solid": [], "heavy_market": [], "outsiders": []},
-            "featured_horse": None
-        }
-
-    # 1. 篩選焦點馬匹 (預設為 1 號或 3 號馬)
-    featured = horses[0] if len(horses) > 0 else {}
-    
-    # 2. 自動計算三類推薦 (最合理4隻、重票4隻、爆冷2隻)
-    solid_list = [f"{h['number']}號 {h['name']}" for h in horses[:4]]
-    heavy_list = [f"{h['number']}號 {h['name']}" for h in horses[1:5]] if len(horses) >= 5 else solid_list
-    outsider_list = [f"{h['number']}號 {h['name']}" for h in horses[-2:]] if len(horses) >= 6 else []
-
-    # 3. 6 大維度結構化資料
-    dimensions_data = {
-        "summary_recommendations": {
-            "solid": solid_list,
-            "heavy_market": heavy_list,
-            "outsiders": outsider_list
-        },
-        "featured_horse": {
-            "number": featured.get("number", "1"),
-            "name": featured.get("name", "重點馬匹"),
-            "trainer": {
-                "name": featured.get("trainer", "練馬師"),
-                "score": 85,
-                "note": f"{featured.get('trainer', '練馬師')} 近期勝率穩定，今場部署精準。"
-            },
-            "track_env": {
-                "score": 88,
-                "note": f"{featured.get('draw', '--')} 檔出賽，佔有地利優勢。"
-            },
-            "jockey": {
-                "name": featured.get("jockey", "騎師"),
-                "score": 90,
-                "note": f"{featured.get('jockey', '騎師')} 與 {featured.get('trainer', '練馬師')} 合作默契極佳。"
-            },
-            "horse_status": {
-                "status_tag": "狀態大勇",
-                "note": "近期晨操表現亮眼，體重維持在最佳競賽範圍。"
-            },
-            "odds_dimension": {
-                "total_score": 92,
-                "t1": {"value": "12.0 ➔ 9.5", "score": 75},
-                "t2": {"value": "9.5 ➔ 6.0", "score": 88},
-                "t3": {"value": "6.0 ➔ 3.8", "score": 95},
-                "cross_compare": {
-                    "value": "賠率急瀉: -68.3%",
-                    "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量進場」訊號！"
-                }
-            }
-        }
-    }
-    return dimensions_data
-
-def parse_race_page(soup, r_no):
-    if not soup:
-        return None
-
-    header_text = ""
-    race_card_hdr = soup.select_one('.race_tab, .f_fs13, .race_header, .race_tab_bg')
-    if race_card_hdr:
-        header_text = race_card_hdr.get_text()
-
-    post_time = "--:--"
-    time_match = re.search(r'(\d{1,2}:\d{2})', header_text)
-    if time_match:
-        post_time = time_match.group(1)
-
-    race_class = "第---班"
-    class_match = re.search(r'(第[一二三四五]班|Group \d|G\d|條件賽|S\d-\d)', header_text)
-    if class_match:
-        race_class = class_match.group(1)
-
-    distance = "----米"
-    dist_match = re.search(r'(\d{3,4})米', header_text)
-    if dist_match:
-        distance = f"{dist_match.group(1)}米"
-
-    course = "草地"
-    if "全天候" in header_text:
-        course = "全天候跑道"
-    elif "草地" in header_text:
-        course = "草地"
-
-    horses = []
-    table = soup.select_one('table.starter, table.table_bd')
-    if table:
-        rows = table.select('tr')
-        for row in rows:
-            cols = row.select('td')
-            if len(cols) >= 5:
-                h_no_raw = cols[0].text.strip()
-                if h_no_raw.isdigit():
-                    row_text = row.get_text()
-
-                    brand_match = re.search(r'([A-Z]\d{3})', row_text)
-                    h_brand = brand_match.group(1) if brand_match else "--"
-
-                    h_name = "--"
-                    name_a = row.select_one('a[href*="Horse.aspx"], a[href*="horse"]')
-                    if name_a:
-                        h_name = name_a.text.strip().split('(')[0]
-                    else:
-                        for col in cols[1:4]:
-                            txt = col.text.strip()
-                            if txt and not txt.isdigit() and not re.search(r'[A-Z]\d{3}', txt) and len(txt) <= 8:
-                                h_name = txt.split('(')[0]
-                                break
-
-                    jockey = "--"
-                    jockey_a = row.select_one('a[href*="Jockey"], a[href*="jockey"]')
-                    if jockey_a:
-                        jockey = jockey_a.text.strip()
-                    else:
-                        for col in cols:
-                            txt = col.text.strip()
-                            if any(char in txt for char in ["潘頓", "田泰安", "布文", "何澤堯", "周俊樂", "潘明輝", "袁幸堯", "鍾易禮", "艾兆禮", "希威森", "黃智弘", "金誠剛", "馬昆", "蘇銘倫", "胡意範", "莫萊斯", "賽迪爾", "馬立義", "龐可立"]):
-                                jockey = txt
-                                break
-
-                    draw = "--"
-                    draw_match = re.search(r'檔位\s*[:：]?\s*(\d{1,2})', row_text)
-                    if draw_match:
-                        draw = draw_match.group(1)
-                    else:
-                        for idx, col in enumerate(cols):
-                            txt = col.text.strip()
-                            if txt.isdigit():
-                                val = int(txt)
-                                if 1 <= val <= 24 and str(val) != h_no_raw and idx in [5, 6, 7]:
-                                    draw = str(val)
-                                    break
-
-                    weight = "--"
-                    weight_match = re.search(r'(1[0-3]\d)', row_text)
-                    if weight_match:
-                        weight = weight_match.group(1)
-
-                    trainer = "--"
-                    trainer_a = row.select_one('a[href*="Trainer"], a[href*="trainer"]')
-                    if trainer_a:
-                        trainer = trainer_a.text.strip()
-                    else:
-                        for col in reversed(cols):
-                            txt = col.text.strip()
-                            if any(char in txt for char in ["沈集成", "告東尼", "韋達", "方嘉柏", "姚本輝", "賀賢", "文家良", "蔡約翰", "廖康銘", "鄭俊偉", "巫偉傑", "呂健威", "高伯新", "苗禮德", "羅富全", "葉楚航", "蘇偉賢", "徐雨石", "郁國思", "葛威法", "歐文篇", "顧奧義", "何傑仕", "薛寶力"]):
-                                trainer = txt
-                                break
-
-                    horses.append({
-                        "number": h_no_raw,
-                        "brand": h_brand,
-                        "name": h_name,
-                        "jockey": jockey,
-                        "draw": draw,
-                        "weight": weight,
-                        "trainer": trainer
-                    })
-
-    # 自動融合 6 大維度數據
-    dim_data = generate_6_dimensions(horses, r_no)
-
-    return {
-        "race_number": r_no,
-        "post_time": post_time,
-        "class": race_class,
-        "distance": distance,
-        "course": course,
-        "horses": horses,
-        "summary_recommendations": dim_data["summary_recommendations"],
-        "featured_horse": dim_data["featured_horse"]
-    }
-
-def update_all_races():
-    existing_data = {}
-    if os.path.exists("data.json"):
+def load_json(path, default):
+    if os.path.exists(path):
         try:
-            with open("data.json", "r", encoding="utf-8") as f:
-                existing_data = json.load(f)
-        except Exception as e:
-            print("讀取舊 data.json 失敗:", e)
+            with open(path,'r',encoding='utf-8') as f: return json.load(f)
+        except: return default
+    return default
 
-    soup = get_soup(BASE_URL)
-    if not soup:
-        print("無法訪問馬會主頁")
-        return
+TRAINER_DB = load_json('trainer_db.json', {"沈集成":{"wins":28,"places":65,"runners":220,"last6_wins":5,"last6_places":8,"last6_runners":18,"past_wins":320,"past_places":580,"past_runners":1800}})
+TRACK_DB = load_json('track_bias_db.json', {"沙田_1200_C+3":{"1":{"win_rate":0.12,"place_rate":0.35},"11":{"win_rate":0.04,"place_rate":0.15,"is_worst":True}}})
+JOCKEY_DB = load_json('jockey_db.json', {"潘頓":{"place":0.38,"win":0.16,"overall_place":0.38,"overall_win":0.16,"style":"後上爆發型"},"沈集成+潘頓":{"place":0.42,"win":0.19,"combo_place":0.42,"combo_win":0.19}})
+HORSE_DB = load_json('horse_db.json', {"浪漫勇士":{"dist_stats":{"1200":{"place_rate":0.55,"win_rate":0.25}},"affinity":{"潘頓":{"place":0.80,"win":0.5}}}})
 
-    race_date = "2026年9月27日"
-    venue = "沙田"
-    track_condition = "快地"
+def period_score(w,p,r):
+    if r==0: return 50
+    return w/r*100*0.7 + (p-w)/r*100*0.3 + p/r*10
 
-    page_text = soup.get_text()
-    date_match = re.search(r'\d{4}年\d{1,2}月\d{1,2}日', page_text)
-    if date_match:
-        race_date = date_match.group(0)
+def calc_d1(trainer, ctx):
+    t=TRAINER_DB.get(trainer, {"wins":10,"places":30,"runners":100,"last6_wins":1,"last6_places":3,"last6_runners":10,"past_wins":60,"past_places":150,"past_runners":500})
+    long_s=period_score(t['past_wins'],t['past_places'],t['past_runners'])
+    season_s=period_score(t['wins'],t['places'],t['runners'])
+    hot_s=min(period_score(t['last6_wins'],t['last6_places'],t['last6_runners'])*1.15,98)
+    return int(max(35,min(99,long_s*0.4+season_s*0.4+hot_s*0.2))), f"獨贏{t['wins']/t['runners']*100:.1f}% 上名{t['places']/t['runners']*100:.0f}%"
 
-    if "跑馬地" in page_text:
-        venue = "跑馬地"
+def calc_d2(horse, ctx):
+    key=f"{ctx['venue']}_{ctx['distance']}_{ctx['rail']}"
+    stats=TRACK_DB.get(key,{}).get(str(horse['draw']),{"win_rate":0.07,"place_rate":0.22})
+    base=stats['place_rate']*60+stats['win_rate']*120
+    if stats.get('is_worst'): base=28
+    bias=90 if ctx['rail'] in ['C','C+3'] and horse['draw']<=3 else 40 if horse['draw']>=10 else 75
+    mod=1.0; tag=""
+    if horse['draw']<=2 and horse['style']=='領放': mod=1.12; tag="✅內檔領放+12%"
+    elif horse['draw']>=10 and horse['style']=='領放': mod=0.70; tag="🔴外檔領放死穴"
+    elif horse['draw']<=2 and horse['style']=='後上': mod=0.85; tag="⚠️內檔後上易塞"
+    final=(base*0.6+bias*0.25+70*0.15)*mod
+    return int(max(20,min(99,final))), f"{horse['draw']}檔 上名{stats['place_rate']*100:.0f}% {tag}", stats.get('is_worst',False)
 
-    conditions = ["快地", "好地", "黏地", "軟地", "重地", "濕快地", "濕慢地"]
-    for c in conditions:
-        if c in page_text:
-            track_condition = c
-            break
+def calc_d3(jockey,trainer,horse,last_jockey):
+    combo=JOCKEY_DB.get(f"{trainer}+{jockey}",{"combo_place":0.25,"combo_win":0.08,"place":0.25,"win":0.08})
+    overall=JOCKEY_DB.get(jockey,{"overall_place":0.25,"overall_win":0.06,"style":"均衡"})
+    cp=combo.get('combo_place',combo['place']); op=overall.get('overall_place',overall['place'])
+    intent=(cp-op)*100; synergy=cp*60+combo.get('combo_win',0.08)*120+intent*0.8
+    skill=95 if horse['style']=='後上' and overall.get('style')=='後上爆發型' else 92 if horse['style']=='領放' and overall.get('style')=='前速領放型' else 75
+    switch=92 if last_jockey and JOCKEY_DB.get(jockey,{}).get('overall_win',0.06) > JOCKEY_DB.get(last_jockey,{}).get('overall_win',0.06)+0.05 else 70
+    final=synergy*0.5+skill*0.3+switch*0.2
+    tag="⭐️深度默契" if cp>=0.40 and intent>=10 else ""
+    return int(max(35,min(99,final))), f"{tag} 組合{cp*100:.0f}%上名"
 
-    numbers = []
-    for a in soup.find_all('a', href=True):
-        if 'RaceNo=' in a['href']:
-            m = re.search(r'RaceNo=(\d+)', a['href'])
-            if m:
-                numbers.append(int(m.group(1)))
-    total_races = max(numbers) if numbers else 11
+def calc_d4(horse,ctx):
+    hdb=HORSE_DB.get(horse['name'],{})
+    c_score=88 if horse.get('from_conghua') and horse.get('had_trial') else 70
+    cur_w=horse.get('body_weight',1130); last_w=horse.get('last_body_weight',cur_w)
+    w_score=85-15 if abs(cur_w-last_w)>=20 else 85
+    dist_stats=hdb.get('dist_stats',{}).get(str(ctx['distance']),{"place_rate":0.25,"win_rate":0.07})
+    dist_score=dist_stats['place_rate']*60+dist_stats['win_rate']*100
+    aff=hdb.get('affinity',{}).get(horse['jockey'],{"place":0.25,"win":0.08})
+    aff_score=aff['place']*60+aff['win']*100
+    penalty=30 if horse.get('last_injury')=='骨折' else 0
+    final=(c_score*0.25+w_score*0.25+dist_score*0.30+aff_score*0.20)-penalty
+    return int(max(20,min(98,final))), f"體重{cur_w}磅 | {ctx['distance']}m上名{dist_stats['place_rate']*100:.0f}%", "⚠️腳患" if penalty else ""
 
-    races_dict = {}
-    if existing_data.get("races") and existing_data.get("race_date") == race_date:
-        for r in existing_data["races"]:
-            races_dict[r["race_number"]] = r
+def calc_d5(odds,fund):
+    def drop(a,b): return (a-b)/a*100 if a else 0
+    def s(d): return 95 if d>=50 else 85 if d>=30 else 78 if d>=15 else 68
+    pools=['win','place','quinella','qp','forecast','trifecta']
+    t1s=[];t2s=[];t3s=[]; drops={}
+    for pool in pools:
+        arr=odds.get(pool,[0,0,0])
+        if len(arr)<3 or arr[0]==0: continue
+        t1,t2,t3=arr
+        drops[pool]={"t1_t2":drop(t1,t2),"t2_t3":drop(t2,t3),"t1_t3":drop(t1,t3),"t1":t1,"t2":t2,"t3":t3}
+        t1s.append(70); t2s.append(s(drop(t1,t2))); t3s.append(s(drop(t2,t3)))
+    raw = sum(t1s)/len(t1s)*0.2 + sum(t2s)/len(t2s)*0.3 + sum(t3s)/len(t3s)*0.5 if t1s else 70
+    win_t3=odds.get('win',[0,0,6])[2]; win_t1=odds.get('win',[0,0,6])[0]; place_t3=odds.get('place',[0,0,3])[2]
+    bonus=0; tags=[]
+    if fund>=80 and win_t3>=10: bonus+=15; tags.append(f"💎高Value {fund}分但{win_t3}倍")
+    elif fund<=50 and win_t3<=3: bonus-=20; tags.append(f"⚠️熱門陷阱")
+    if win_t3>=12 and place_t3 and place_t3<=3.2: bonus+=12; tags.append(f"🛡️大戶保險盤 W{win_t3} vs P{place_t3}")
+    final=max(15,min(99,raw+bonus))
+    win_d=drops.get('win',{"t1_t2":0,"t2_t3":0,"t1_t3":drop(win_t1,win_t3),"t1":win_t1,"t2":odds.get('win',[0,0,0])[1],"t3":win_t3})
+    display={"t1":{"value":win_d['t1'],"diff":0,"label":"T1 隔夜 20%"},"t2":{"value":win_d['t2'],"diff":win_d['t1_t2'],"label":"T2 中段 30%"},"t3":{"value":win_d['t3'],"diff":win_d['t2_t3'],"label":"T3 臨場 50%"},"t3_vs_t1":{"value":win_d['t3'],"diff":win_d['t1_t3'],"is_smart":win_d['t1_t3']>=35,"label":"T3 vs T1 終極"},"all_drops":drops,"cross_pool_count":sum(1 for v in drops.values() if v['t1_t3']>30)}
+    return int(final), display, f"T1 {win_d['t1']}→T2 {win_d['t2']}→T3 {win_d['t3']} | T3vsT1 -{win_d['t1_t3']:.1f}%", tags
 
-    for r_no in range(1, total_races + 1):
-        url = f"{BASE_URL}?RaceNo={r_no}"
-        r_soup = get_soup(url) if r_no > 1 else soup
-        race_data = parse_race_page(r_soup, r_no)
-
-        if race_data and len(race_data["horses"]) > 0:
-            races_dict[r_no] = race_data
-
-    all_races = [races_dict[k] for k in sorted(races_dict.keys())]
-
-    final_data = {
-        "race_date": race_date,
-        "venue": venue,
-        "track_condition": track_condition,
-        "total_races": len(all_races),
-        "races": all_races
-    }
-
-    with open("data.json", "w", encoding="utf-8") as f:
-        json.dump(final_data, f, ensure_ascii=False, indent=2)
-
-    print(f"✅ 成功融合 6 大維度與全賽日排位，共 {len(all_races)} 場！")
-
-if __name__ == "__main__":
-    update_all_races()
+def build_race():
+    ctx={"venue":"沙田","distance":1200,"rail":"C+3","going":"好地"}
+    horses_input=[
+        {"no":5,"name":"浪漫勇士","draw":1,"style":"領放","jockey":"潘頓","trainer":"沈集成","body_weight":1135,"last_body_weight":1138,"best_distance":1200,"carried_weight":135,"from_conghua":True,"conghua_days":10,"had_trial":True,"last_injury":None,"past_wins_with_jockey":{"潘頓":2},"odds":{"win":[15.0,9.5,6.5],"place":[4.2,3.1,2.2],"quinella":[30,20,14],"qp":[25,18,12],"forecast":[40,28,18],"trifecta":[120,90,60]},"last_jockey":"田泰安"},
+        {"no":3,"name":"金鎗六十","draw":11,"style":"後上","jockey":"何澤堯","trainer":"呂健威","body_weight":1150,"last_body_weight":1120,"best_distance":1200,"carried_weight":126,"odds":{"win":[3.5,3.2,2.8],"place":[1.8,1.7,1.5],"quinella":[15,13,11],"qp":[12,10,8],"forecast":[20,18,15],"trifecta":[80,70,60]},"last_jockey":"何澤堯"},
+        {"no":8,"name":"爆冷王","draw":5,"style":"後上","jockey":"田泰安","trainer":"桂福特","body_weight":1125,"last_body_weight":1128,"best_distance":1200,"carried_weight":115,"apprentice_allowance":7,"odds":{"win":[28.0,22.0,14.0],"place":[5.0,4.0,2.8],"quinella":[60,45,28],"qp":[40,30,18],"forecast":[80,60,35],"trifecta":[200,150,90]},"last_jockey":"潘明輝"},
+        {"no":2,"name":"超強駒","draw":2,"style":"領放","jockey":"布文","trainer":"蔡約翰","body_weight":1100,"last_body_weight":1125,"best_distance":1400,"carried_weight":133,"last_injury":"骨折","days_since_injury":90,"odds":{"win":[4.5,5.0,6.0],"place":[2.2,2.4,2.6],"quinella":[18,20,22],"qp":[15,16,18],"forecast":[25,28,30],"trifecta":[100,110,120]},"last_jockey":"潘頓"},
+    ]
+    results=[]
+    for h in horses_input:
+        d1,d1d=calc_d1(h['trainer'],ctx)
+        d2,d2d,dead=calc_d2(h,ctx)
+        d3,d3d=calc_d3(h['jockey'],h['trainer'],h,h.get('last_jockey'))
+        d4,d4d,inj=calc_d4(h,ctx)
+        fund=(d1+d2+d3+d4)/4
+        d5,d5_disp,d5_desc,tags=calc_d5(h['odds'],fund)
+        total=fund*0.6+d5*0.4
+        grade="S" if total>=90 else "A+" if total>=82 else "A" if total>=72 else "B" if total>=60 else "C"
+        results.append({"no":h['no'],"name":h['name'],"draw":h['draw'],"style":h['style'],"jockey":h['jockey'],"trainer":h['trainer'],"d1":d1,"d2":d2,"d3":d3,"d4":d4,"d5":d5,"fundamental":int(fund),"total":int(total),"grade":grade,"d1_desc":d1d,"d2_desc":d2d,"d3_desc":d3d,"d4_desc":d4d,"d5_desc":d5_desc,"d5_tags":tags,"d5_display":d5_disp,"odds":h['odds'],"is_dead_draw":dead,"injury_alert":inj})
+    solid=sorted([r for r in results if r['d4']>60 and not r['is_dead_draw'] and not r['injury_alert']], key=lambda x:x['fundamental'], reverse=True)[:4]
+    heavy=sorted(results, key=lambda x:(x['d5_display']['cross_pool_count'],x['d5']), reverse=True)[:4]
+    outsiders=[r for r in results if 12<=r['odds']['win'][2]<=50 and r['fundamental']>=60 and r['d5_display']['t3_vs_t1']['diff']>=20][:2]
+    output={"race":f"{ctx['venue']} {ctx['distance']}m {ctx['rail']}","ctx":ctx,"timestamp":datetime.now().isoformat(),"horses":sorted(results,key=lambda x:x['total'],reverse=True),"recommendations":{"solid":{"title":"🟢 最合理結果","horses":[r['no'] for r in solid],"detail":[f"{r['no']}號 {r['name']} 基本面{r['fundamental']}分" for r in solid]},"heavy":{"title":"🔴 重票之選","horses":[r['no'] for r in heavy],"detail":[f"{r['no']}號 {r['name']} T3vsT1 -{r['d5_display']['t3_vs_t1']['diff']:.1f}% {r['d5_display']['cross_pool_count']}個彩池" for r in heavy]},"outsiders":{"title":"⚡️ 爆冷之選","horses":[r['no'] for r in outsiders],"detail":[f"{r['no']}號 {r['name']} {r['odds']['win'][2]}倍 T3急瀉{r['d5_display']['t3']['diff']:.1f}%" for r in outsiders]}}}
+    with open('data.json','w',encoding='utf-8') as f: json.dump(output,f,ensure_ascii=False,indent=2)
+    print("✅ data.json 已生成")
+if __name__=="__main__": build_race()
