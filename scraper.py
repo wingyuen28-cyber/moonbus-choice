@@ -21,7 +21,7 @@ def get_soup(url):
     return None
 
 def parse_race_page(soup, r_no):
-    """精準提取特定場次的排位資料"""
+    """精準對齊馬會排位表所有欄位 (馬號/烙號/馬名/騎師/檔位/負磅/練馬師)"""
     if not soup:
         return None
 
@@ -53,7 +53,7 @@ def parse_race_page(soup, r_no):
         course = "草地"
 
     horses = []
-    # 尋找排位表格
+    # 尋找馬會排位表格
     table = soup.select_one('table.starter, table.table_bd')
     if table:
         rows = table.select('tr')
@@ -64,34 +64,62 @@ def parse_race_page(soup, r_no):
                 h_no_raw = cols[0].text.strip()
                 if h_no_raw.isdigit():
                     
-                    # 精準提取各欄位，防止隱藏列干擾
-                    # 馬名 (通常包含烙號於括號內或鄰近 tds)
-                    name_td = row.select_one('td.horse, td[class*="horse"]')
-                    h_name = name_td.text.strip().split('(')[0] if name_td else cols[2].text.strip().split('(')[0]
-
-                    # 烙號/編號
+                    # 1. 馬匹烙號 (例如 K114, H334)
                     brand_match = re.search(r'([A-Z]\d{3})', row.get_text())
                     h_brand = brand_match.group(1) if brand_match else "--"
 
-                    # 騎師
-                    jockey_td = row.select_one('td.jockey, td[class*="jockey"]')
-                    jockey = jockey_td.text.strip() if jockey_td else cols[3].text.strip()
+                    # 2. 馬名 (尋找包含馬名連結或無數字的文字)
+                    h_name = "--"
+                    name_a = row.select_one('a[href*="Horse.aspx"], a[href*="horse"]')
+                    if name_a:
+                        h_name = name_a.text.strip().split('(')[0]
+                    else:
+                        for col in cols[1:4]:
+                            txt = col.text.strip()
+                            if txt and not txt.isdigit() and not re.search(r'[A-Z]\d{3}', txt) and len(txt) <= 6:
+                                h_name = txt.split('(')[0]
+                                break
 
-                    # 檔位 (數字)
+                    # 3. 騎師 (馬會頁面中騎師通常帶有 JockeyProfile 或騎師連結)
+                    jockey = "--"
+                    jockey_a = row.select_one('a[href*="Jockey"], a[href*="jockey"]')
+                    if jockey_a:
+                        jockey = jockey_a.text.strip()
+                    else:
+                        # 備用：從欄位文字中過濾騎師名
+                        for col in cols:
+                            txt = col.text.strip()
+                            if any(char in txt for char in ["潘頓", "田泰安", "布文", "何澤堯", "周俊樂", "潘明輝", "袁幸堯", "鍾易禮", "艾兆禮", "希威森", "黃智弘", "金誠剛"]):
+                                jockey = txt
+                                break
+
+                    # 4. 檔位 (馬會檔位通常為 1~14 的獨立數字 td)
                     draw = "--"
-                    for col in cols:
+                    for col in cols[3:8]:
                         txt = col.text.strip()
-                        if txt.isdigit() and int(txt) <= 14 and col != cols[0]:
-                            draw = txt
+                        if txt.isdigit() and 1 <= int(txt) <= 14:
+                            # 避開馬號與負磅
+                            if txt != h_no_raw and not (100 <= int(txt) <= 140):
+                                draw = txt
+                                break
 
-                    # 負磅 (通常在 105 ~ 135 磅之間)
+                    # 5. 負磅 (105~135 之間的數字)
                     weight = "--"
                     weight_match = re.search(r'(1[0-3]\d)', row.get_text())
                     if weight_match:
                         weight = weight_match.group(1)
 
-                    # 練馬師
-                    trainer = cols[-2].text.strip() if len(cols) > 6 else "--"
+                    # 6. 練馬師 (帶有 TrainerProfile 或練馬師連結)
+                    trainer = "--"
+                    trainer_a = row.select_one('a[href*="Trainer"], a[href*="trainer"]')
+                    if trainer_a:
+                        trainer = trainer_a.text.strip()
+                    else:
+                        for col in reversed(cols):
+                            txt = col.text.strip()
+                            if any(char in txt for char in ["沈集成", "告東尼", "韋達", "方嘉柏", "姚本輝", "賀賢", "文家良", "蔡約翰", "廖康銘", "鄭俊偉", "巫偉傑", "呂健威", "高伯新", "苗禮德", "羅富全", "葉楚航", "蘇偉賢", "徐雨石"]):
+                                trainer = txt
+                                break
 
                     horses.append({
                         "number": h_no_raw,
@@ -113,21 +141,19 @@ def parse_race_page(soup, r_no):
     }
 
 def update_all_races():
-    # 1. 先載入舊有 data.json 檔案，防止舊賽事前幾場資料被覆蓋遺失
     existing_data = {}
     if os.path.exists("data.json"):
         try:
             with open("data.json", "r", encoding="utf-8") as f:
                 existing_data = json.load(f)
         except Exception as e:
-            print("讀取舊 data.json 失敗，將建立新檔:", e)
+            print("讀取舊 data.json 失敗:", e)
 
     soup = get_soup(BASE_URL)
     if not soup:
         print("無法訪問馬會主頁")
         return
 
-    # 2. 獲取當日賽日基礎資訊
     race_date = "2026年9月27日"
     venue = "沙田"
     track_condition = "快地"
@@ -146,7 +172,6 @@ def update_all_races():
             track_condition = c
             break
 
-    # 3. 偵測總場次 (8~11場)
     numbers = []
     for a in soup.find_all('a', href=True):
         if 'RaceNo=' in a['href']:
@@ -155,19 +180,16 @@ def update_all_races():
                 numbers.append(int(m.group(1)))
     total_races = max(numbers) if numbers else 11
 
-    # 建立或複製原有場次字典 (key: race_number)
     races_dict = {}
     if existing_data.get("races") and existing_data.get("race_date") == race_date:
         for r in existing_data["races"]:
             races_dict[r["race_number"]] = r
 
-    # 4. 爬取最新場次資料並合併
     for r_no in range(1, total_races + 1):
         url = f"{BASE_URL}?RaceNo={r_no}"
         r_soup = get_soup(url) if r_no > 1 else soup
         race_data = parse_race_page(r_soup, r_no)
 
-        # 若成功爬到該場次的馬匹，則更新；若該場已完賽且無新排位表，保留舊資料
         if race_data and len(race_data["horses"]) > 0:
             races_dict[r_no] = race_data
         elif r_no not in races_dict:
@@ -180,7 +202,6 @@ def update_all_races():
                 "horses": []
             }
 
-    # 轉回 List 格式並排序
     all_races = [races_dict[k] for k in sorted(races_dict.keys())]
 
     final_data = {
@@ -194,7 +215,7 @@ def update_all_races():
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(final_data, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 成功記錄 1~{len(all_races)} 場完整賽事資料至 data.json！")
+    print(f"✅ 成功精準對齊 1~{len(all_races)} 場排位資料！")
 
 if __name__ == "__main__":
     update_all_races()
