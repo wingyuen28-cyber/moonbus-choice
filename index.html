@@ -11,6 +11,9 @@
             --accent: #38bdf8;
             --text: #f8fafc;
             --sub-text: #94a3b8;
+            --green: #22c55e;
+            --yellow: #eab308;
+            --red: #ef4444;
         }
 
         body {
@@ -71,11 +74,51 @@
             justify-content: space-between;
         }
 
+        /* 🏆 維度六：智能總結推薦區塊 */
+        .summary-section {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #4338ca;
+        }
+
+        .summary-title { font-size: 0.95rem; font-weight: bold; color: #a5b4fc; margin-bottom: 8px; }
+
+        .rec-box {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 6px;
+        }
+
+        .rec-tag { font-size: 0.75rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 2px; }
+        .tag-green { background: #15803d; color: #dcfce7; }
+        .tag-red { background: #b91c1c; color: #fee2e2; }
+        .tag-yellow { background: #a16207; color: #fef9c3; }
+
+        .horse-list { font-size: 0.85rem; font-weight: bold; color: #f1f5f9; }
+
+        /* 5 大維度小卡片 */
+        .dimension-card {
+            background: var(--card);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #334155;
+            font-size: 0.8rem;
+        }
+
+        .dim-header { display: flex; justify-content: space-between; font-weight: bold; color: var(--accent); margin-bottom: 4px; }
+        .badge { padding: 1px 5px; border-radius: 4px; font-size: 0.75rem; background: #166534; color: #bbf7d0; }
+
+        /* 排位表格 */
         .table-container {
             overflow-x: auto;
             background: var(--card);
             border-radius: 6px;
             border: 1px solid #334155;
+            margin-top: 10px;
         }
 
         table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: center; }
@@ -96,11 +139,83 @@
         </div>
     </div>
 
+    <!-- 場次按鈕 -->
     <div class="race-nav" id="race-nav"></div>
 
+    <!-- 賽事簡介 -->
     <div class="race-info-bar">
         <div><b id="current-race-title">第 -- 場</b></div>
         <div id="current-race-detail" style="color: #94a3b8;">開跑時間: --:--</div>
+    </div>
+
+    <!-- 🎯 維度六：智能總結推薦 -->
+    <div class="summary-section">
+        <div class="summary-title" id="summary-race-num">🎯 第 -- 場：智能總結推薦</div>
+        
+        <div class="rec-box">
+            <span class="rec-tag tag-green">🟢 最合理結果 (4隻)</span>
+            <div class="horse-list" id="rec-solid">--</div>
+        </div>
+
+        <div class="rec-box">
+            <span class="rec-tag tag-red">🔴 重票之選 (4隻)</span>
+            <div class="horse-list" id="rec-heavy">--</div>
+        </div>
+
+        <div class="rec-box">
+            <span class="rec-tag tag-yellow">⚡️ 爆冷之選 (2隻)</span>
+            <div class="horse-list" id="rec-outsider">--</div>
+        </div>
+    </div>
+
+    <!-- 📊 維度一至五：焦點馬匹詳細分析 -->
+    <div style="font-size: 0.85rem; font-weight: bold; margin: 12px 0 6px 0; color: var(--sub-text);" id="featured-title">
+        📊 焦點馬匹 5 大維度分析
+    </div>
+
+    <div class="dimension-card">
+        <div class="dim-header">
+            <span id="dim-trainer-title">1. 練馬師維度</span>
+            <span class="badge" id="dim-trainer-score">得分: --</span>
+        </div>
+        <div id="dim-trainer-note" style="color: var(--sub-text);">--</div>
+    </div>
+
+    <div class="dimension-card">
+        <div class="dim-header">
+            <span>2. 場地與環境維度</span>
+            <span class="badge" id="dim-track-score">得分: --</span>
+        </div>
+        <div id="dim-track-note" style="color: var(--sub-text);">--</div>
+    </div>
+
+    <div class="dimension-card">
+        <div class="dim-header">
+            <span id="dim-jockey-title">3. 騎師維度</span>
+            <span class="badge" id="dim-jockey-score">得分: --</span>
+        </div>
+        <div id="dim-jockey-note" style="color: var(--sub-text);">--</div>
+    </div>
+
+    <div class="dimension-card">
+        <div class="dim-header">
+            <span>4. 馬匹個體與狀態維度</span>
+            <span class="badge" id="dim-status-tag">--</span>
+        </div>
+        <div id="dim-status-note" style="color: var(--sub-text);">--</div>
+    </div>
+
+    <div class="dimension-card">
+        <div class="dim-header">
+            <span>5. 賠率與資金維度 (T1/T2/T3)</span>
+            <span class="badge" id="dim-odds-score">總加權: --分</span>
+        </div>
+        <div id="dim-odds-note" style="color: #a5b4fc; font-weight: bold;">--</div>
+    </div>
+
+    <!-- 全場次排位表格 -->
+    <div style="font-size: 0.85rem; font-weight: bold; margin: 14px 0 6px 0; color: var(--sub-text);">
+        📋 本場出賽馬匹排位表
     </div>
 
     <div class="table-container">
@@ -116,7 +231,7 @@
                 </tr>
             </thead>
             <tbody id="horse-table-body">
-                <!-- 動態注入內容 -->
+                <!-- 動態注入 -->
             </tbody>
         </table>
     </div>
@@ -165,9 +280,42 @@
         function renderRace(raceIndex) {
             const race = globalData.races[raceIndex];
 
+            // 1. 場次基礎標題
             document.getElementById('current-race-title').innerText = `第 ${race.race_number} 場 (${race.class})`;
             document.getElementById('current-race-detail').innerText = `⏰ ${race.post_time} 開跑 | ${race.distance} | ${race.course}`;
+            document.getElementById('summary-race-num').innerText = `🎯 第 ${race.race_number} 場：智能總結推薦`;
 
+            // 2. 渲染維度六：智能總結推薦
+            if (race.summary_recommendations) {
+                document.getElementById('rec-solid').innerText = race.summary_recommendations.solid.join('、') || '分析中';
+                document.getElementById('rec-heavy').innerText = race.summary_recommendations.heavy_market.join('、') || '分析中';
+                document.getElementById('rec-outsider').innerText = race.summary_recommendations.outsiders.join('、') || '分析中';
+            }
+
+            // 3. 渲染維度一至五：焦點馬匹
+            if (race.featured_horse) {
+                const fh = race.featured_horse;
+                document.getElementById('featured-title').innerText = `📊 第 ${race.race_number} 場焦點馬匹：${fh.number}號「${fh.name}」 5大維度分析`;
+                
+                document.getElementById('dim-trainer-title').innerText = `1. 練馬師維度 (${fh.trainer.name})`;
+                document.getElementById('dim-trainer-score').innerText = `得分: ${fh.trainer.score}`;
+                document.getElementById('dim-trainer-note').innerText = fh.trainer.note;
+
+                document.getElementById('dim-track-score').innerText = `得分: ${fh.track_env.score}`;
+                document.getElementById('dim-track-note').innerText = fh.track_env.note;
+
+                document.getElementById('dim-jockey-title').innerText = `3. 騎師維度 (${fh.jockey.name})`;
+                document.getElementById('dim-jockey-score').innerText = `得分: ${fh.jockey.score}`;
+                document.getElementById('dim-jockey-note').innerText = fh.jockey.note;
+
+                document.getElementById('dim-status-tag').innerText = fh.horse_status.status_tag;
+                document.getElementById('dim-status-note').innerText = fh.horse_status.note;
+
+                document.getElementById('dim-odds-score').innerText = `總加權: ${fh.odds_dimension.total_score}分`;
+                document.getElementById('dim-odds-note').innerText = `${fh.odds_dimension.cross_compare.value} - ${fh.odds_dimension.cross_compare.note}`;
+            }
+
+            // 4. 渲染排位表
             const tbody = document.getElementById('horse-table-body');
             tbody.innerHTML = '';
 
@@ -185,7 +333,7 @@
                     tbody.appendChild(row);
                 });
             } else {
-                tbody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:#94a3b8;">本場次暫無排位資料或已完賽存檔中</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:#94a3b8;">本場次暫無排位資料</td></tr>`;
             }
         }
 
