@@ -1,31 +1,14 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- 1. 瀏覽器頁籤與 App 名稱 -->
-    <title>Moonbus Choice</title>
-
-    <!-- 2. iOS (iPhone/iPad) 主畫面專用設定 -->
-    <meta name="apple-mobile-web-app-title" content="Moonbus Choice">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="icon.png">
-
-    <!-- 3. Android 與 PWA Web App 清單 -->
-    <link rel="manifest" href="manifest.json">
-
-    <style>
-        /* 原有的 CSS 樣式保留 */
-    </style>
-</head>
-
-
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>賽馬六大維度量化分析 App</title>
+    <!-- 1. App 命名：Moonbus Choice -->
+    <title>Moonbus Choice</title>
+    <meta name="apple-mobile-web-app-title" content="Moonbus Choice">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
     <style>
         :root {
             --bg-color: #0f172a;
@@ -39,7 +22,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
@@ -48,32 +31,49 @@
 
         .header {
             text-align: center;
-            padding-bottom: 16px;
+            padding-bottom: 12px;
             border-bottom: 1px solid #334155;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
-        .header h1 { font-size: 1.25rem; margin: 0; color: var(--accent); }
-        .header p { font-size: 0.8rem; color: var(--text-sub); margin-top: 4px; }
+        .header h1 { font-size: 1.4rem; margin: 0; color: var(--accent); letter-spacing: 0.5px; }
+        .header p { font-size: 0.85rem; color: var(--text-sub); margin-top: 4px; }
+        
+        .live-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: var(--green);
+            background: rgba(34, 197, 94, 0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-top: 6px;
+        }
 
-        /* 頂部總結推薦區（維度六） */
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
         .summary-section {
             background: linear-gradient(135deg, #1e1b4b, #312e81);
             border-radius: 12px;
             padding: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             border: 1px solid #4338ca;
         }
 
-        .summary-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #a5b4fc;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .summary-title { font-size: 1.05rem; font-weight: bold; color: #a5b4fc; margin-bottom: 12px; }
 
         .rec-box {
             background: rgba(15, 23, 42, 0.6);
@@ -83,12 +83,12 @@
         }
 
         .rec-tag {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             display: inline-block;
             padding: 2px 8px;
             border-radius: 4px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .tag-green { background: #15803d; color: #dcfce7; }
@@ -97,18 +97,13 @@
 
         .horse-list { font-size: 0.95rem; font-weight: bold; color: #f1f5f9; }
 
-        /* 六大維度卡片區 */
-        .section-title {
-            font-size: 1rem;
-            color: var(--text-sub);
-            margin-bottom: 12px;
-        }
+        .section-title { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 10px; }
 
         .dimension-card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
+            padding: 14px;
+            margin-bottom: 14px;
             border: 1px solid #334155;
         }
 
@@ -117,17 +112,16 @@
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--accent);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
-        /* 賠率三階段獨立網格 */
         .odds-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         .odds-box {
@@ -139,7 +133,7 @@
         }
 
         .odds-box .title { color: var(--text-sub); }
-        .odds-box .val { font-size: 1.1rem; font-weight: bold; margin-top: 4px; }
+        .odds-box .val { font-size: 1.05rem; font-weight: bold; margin-top: 4px; }
         .odds-box .score { font-size: 0.75rem; color: var(--accent); }
 
         .odds-box.full-width {
@@ -148,12 +142,7 @@
             border-color: #6366f1;
         }
 
-        .badge {
-            font-size: 0.75rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: normal;
-        }
+        .badge { font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; }
         .badge-alert { background: #991b1b; color: #fecaca; }
         .badge-success { background: #166534; color: #bbf7d0; }
     </style>
@@ -161,110 +150,177 @@
 <body>
 
     <div class="header">
-        <h1>🏁 賽馬六大維度量化分析 APP</h1>
-        <p>沙田 1400米 草地 (C+3欄) | 第 8 場</p>
+        <h1>🏇 Moonbus Choice</h1>
+        <p id="race-info">正在連線至實時賽馬數據庫...</p>
+        <div class="live-status">
+            <span class="dot"></span>
+            <span id="live-timer">實時同步中 (每15秒刷新)</span>
+        </div>
     </div>
 
-    <!-- 🏆 維度六：智能總結推薦引擎 -->
+    <!-- 🏆 維度六：智能總結推薦 -->
     <div class="summary-section">
         <div class="summary-title">🎯 維度六：智能總結推薦</div>
         
         <div class="rec-box">
             <span class="rec-tag tag-green">🟢 最合理結果 (4隻)</span>
-            <div class="horse-list">3號「金鎗六十」、1號「浪漫勇士」、7號「加州星球」、5號「將王」</div>
+            <div class="horse-list" id="rec-solid">讀取中...</div>
         </div>
 
         <div class="rec-box">
             <span class="rec-tag tag-red">🔴 重票之選 (4隻)</span>
-            <div class="horse-list">3號「金鎗六十」、2號「幸運快車」、8號「福逸」、11號「旺蝦王」</div>
+            <div class="horse-list" id="rec-heavy">讀取中...</div>
         </div>
 
         <div class="rec-box">
             <span class="rec-tag tag-yellow">⚡️ 爆冷之選 (2隻)</span>
-            <div class="horse-list">9號「速遞奇兵」、12號「飛輪閃耀」</div>
+            <div class="horse-list" id="rec-outsider">讀取中...</div>
         </div>
     </div>
 
-    <div class="section-title">📊 焦點馬匹詳細數據：12號「飛輪閃耀」</div>
+    <div class="section-title" id="featured-horse-title">📊 焦點馬匹詳細數據</div>
 
-    <!-- 維度一：練馬師維度 -->
+    <!-- 1. 練馬師維度 -->
     <div class="dimension-card">
         <div class="dim-header">
-            <span>1. 練馬師維度 (桂福特)</span>
-            <span class="badge badge-success">得分: 82</span>
+            <span id="trainer-name">1. 練馬師維度</span>
+            <span class="badge badge-success" id="trainer-score">得分: --</span>
         </div>
-        <div>今季加權上名率: 35.4% | 大賽勝率: 18%</div>
-        <div style="font-size: 0.85rem; color: var(--text-sub); margin-top: 4px;">特長: 專精中短途，近 3 賽日狀態大勇。</div>
+        <div id="trainer-note" style="font-size: 0.85rem; color: var(--text-sub);">讀取中...</div>
     </div>
 
-    <!-- 維度二：場地與環境維度 -->
+    <!-- 2. 場地與環境維度 -->
     <div class="dimension-card">
         <div class="dim-header">
             <span>2. 場地與環境維度</span>
-            <span class="badge badge-success">得分: 88</span>
+            <span class="badge badge-success" id="track-score">得分: --</span>
         </div>
-        <div>1400m 檔位: 2號檔 (歷史上名率 41.2%)</div>
-        <div style="font-size: 0.85rem; color: var(--text-sub); margin-top: 4px;">C+3欄跑法地利: 領放/貼欄馬極度佔優。</div>
+        <div id="track-note" style="font-size: 0.85rem; color: var(--text-sub);">讀取中...</div>
     </div>
 
-    <!-- 維度三：騎師維度 -->
+    <!-- 3. 騎師維度 -->
     <div class="dimension-card">
         <div class="dim-header">
-            <span>3. 騎師維度 (田泰安)</span>
-            <span class="badge badge-success">得分: 92</span>
+            <span id="jockey-name">3. 騎師維度</span>
+            <span class="badge badge-success" id="jockey-score">得分: --</span>
         </div>
-        <div>騎練默契 (田+桂): 上名率高達 42% (⭐️ 深度信任)</div>
-        <div style="font-size: 0.85rem; color: var(--text-sub); margin-top: 4px;">戰術風格: 擅長轉彎推騎爆發與搶欄。</div>
+        <div id="jockey-note" style="font-size: 0.85rem; color: var(--text-sub);">讀取中...</div>
     </div>
 
-    <!-- 維度四：馬匹個體與狀態維度 -->
+    <!-- 4. 馬匹個體與狀態維度 -->
     <div class="dimension-card">
         <div class="dim-header">
             <span>4. 馬匹個體與狀態維度</span>
-            <span class="badge badge-alert">有傷病紀錄</span>
+            <span class="badge badge-alert" id="horse-status-tag">--</span>
         </div>
-        <div>從化特訓: 返港首仗 | 體重: 1130磅 (處最佳範圍)</div>
-        <div style="font-size: 0.85rem; color: var(--text-sub); margin-top: 4px;">
-            ⚠️ 傷病警示: 6個月前曾有「氣管有血」紀錄，但今日乾快地影響極小。
-        </div>
+        <div id="horse-status-note" style="font-size: 0.85rem; color: var(--text-sub);">讀取中...</div>
     </div>
 
-    <!-- 維度五：賠率與資金維度 (你的訂制靈魂) -->
+    <!-- 5. 賠率與資金維度 (實時 T1/T2/T3 & 終極比對) -->
     <div class="dimension-card">
         <div class="dim-header">
-            <span>5. 賠率與資金維度</span>
-            <span class="badge badge-success">總加權: 89分</span>
+            <span>5. 賠率與資金維度 (實時監測)</span>
+            <span class="badge badge-success" id="odds-total-score">總加權: --分</span>
         </div>
-        <div>全彩池資金監測 (獨贏 W / 連贏 Q / 二重彩 F)</div>
+        <div style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 6px;">
+            全彩池資金（W/Q/F/T）即時監控
+        </div>
 
         <div class="odds-grid">
             <div class="odds-box">
-                <div class="title">T1 (前60m vs 隔夜)</div>
-                <div class="val" style="color: var(--text-sub);">18.0 ➔ 15.0</div>
-                <div class="score">權重 20% | 得分: 70</div>
+                <div class="title" id="t1-label">T1 (前60m vs 隔夜)</div>
+                <div class="val" id="t1-val" style="color: var(--text-sub);">--</div>
+                <div class="score" id="t1-score">權重 20% | 得分: --</div>
             </div>
 
             <div class="odds-box">
-                <div class="title">T2 (前8m vs 前30m)</div>
-                <div class="val" style="color: var(--yellow);">15.0 ➔ 9.5</div>
-                <div class="score">權重 30% | 得分: 85</div>
+                <div class="title" id="t2-label">T2 (前8m vs 前30m)</div>
+                <div class="val" id="t2-val" style="color: var(--yellow);">--</div>
+                <div class="score" id="t2-score">權重 30% | 得分: --</div>
             </div>
 
             <div class="odds-box">
-                <div class="title">T3 (前3m vs 前8m)</div>
-                <div class="val" style="color: var(--green);">9.5 ➔ 5.2</div>
-                <div class="score">權重 50% | 得分: 98</div>
+                <div class="title" id="t3-label">T3 (前3m vs 前8m)</div>
+                <div class="val" id="t3-val" style="color: var(--green);">--</div>
+                <div class="score" id="t3-score">權重 50% | 得分: --</div>
             </div>
 
             <div class="odds-box full-width">
-                <div class="title">⚡️ 終極比對 (T3 vs T1 跨階對比)</div>
-                <div class="val" style="color: #a5b4fc;">賠率急瀉: -65.3%</div>
-                <div style="font-size: 0.75rem; color: #c7d2fe; margin-top: 2px;">
-                    🔥 觸發「大戶聰明資金 (Smart Money) 全面進場」訊號！
-                </div>
+                <div class="title" id="cross-label">⚡️ 終極比對 (T3 vs T1 跨階總對比)</div>
+                <div class="val" id="cross-val" style="color: #a5b4fc;">--</div>
+                <div style="font-size: 0.75rem; color: #c7d2fe; margin-top: 2px;" id="cross-note">--</div>
             </div>
         </div>
     </div>
 
+    <script>
+        // 設定自動刷新時間：15秒 (15000毫秒)
+        const REFRESH_INTERVAL = 15000;
+
+        async function fetchRealtimeRaceData() {
+            try {
+                // 加載 timestamp 防止瀏覽器 Cache 快取舊數據
+                const timestamp = new Date().getTime();
+                const response = await fetch(`data.json?t=${timestamp}`);
+                
+                if (!response.ok) throw new Error("網絡數據回應異常");
+                
+                const data = await response.json();
+
+                // 1. 渲染賽事基礎資訊
+                document.getElementById('race-info').innerText = `${data.race_info.venue} ${data.race_info.distance} ${data.race_info.track} | ${data.race_info.race_number}`;
+                document.getElementById('live-timer').innerText = `最後同步：${data.race_info.update_time} (15秒自動刷新)`;
+
+                // 2. 渲染三項智能推薦
+                document.getElementById('rec-solid').innerText = data.summary_recommendations.solid.join('、');
+                document.getElementById('rec-heavy').innerText = data.summary_recommendations.heavy_market.join('、');
+                document.getElementById('rec-outsider').innerText = data.summary_recommendations.outsiders.join('、');
+
+                // 3. 渲染焦點馬匹的前四維度
+                const horse = data.featured_horse;
+                document.getElementById('featured-horse-title').innerText = `📊 焦點馬匹數據：${horse.number}號「${horse.name}」`;
+
+                document.getElementById('trainer-name').innerText = `1. 練馬師維度 (${horse.trainer.name})`;
+                document.getElementById('trainer-score').innerText = `得分: ${horse.trainer.score}`;
+                document.getElementById('trainer-note').innerText = horse.trainer.note;
+
+                document.getElementById('track-score').innerText = `得分: ${horse.track_env.score}`;
+                document.getElementById('track-note').innerText = horse.track_env.note;
+
+                document.getElementById('jockey-name').innerText = `3. 騎師維度 (${horse.jockey.name})`;
+                document.getElementById('jockey-score').innerText = `得分: ${horse.jockey.score}`;
+                document.getElementById('jockey-note').innerText = horse.jockey.note;
+
+                document.getElementById('horse-status-tag').innerText = horse.horse_status.status_tag;
+                document.getElementById('horse-status-note').innerText = horse.horse_status.note;
+
+                // 4. 渲染第五維度（賠率 T1/T2/T3 & 終極跨階比對）
+                const odds = horse.odds_dimension;
+                document.getElementById('odds-total-score').innerText = `總加權: ${odds.total_score}分`;
+
+                document.getElementById('t1-val').innerText = odds.t1.value;
+                document.getElementById('t1-score').innerText = `權重 20% | 得分: ${odds.t1.score}`;
+
+                document.getElementById('t2-val').innerText = odds.t2.value;
+                document.getElementById('t2-score').innerText = `權重 30% | 得分: ${odds.t2.score}`;
+
+                document.getElementById('t3-val').innerText = odds.t3.value;
+                document.getElementById('t3-score').innerText = `權重 50% | 得分: ${odds.t3.score}`;
+
+                document.getElementById('cross-val').innerText = odds.cross_compare.value;
+                document.getElementById('cross-note').innerText = odds.cross_compare.note;
+
+            } catch (err) {
+                console.error("實時數據更新失敗：", err);
+                document.getElementById('live-timer').innerText = "連線更新中...";
+            }
+        }
+
+        // 初始化首次加載
+        fetchRealtimeRaceData();
+
+        // 啟動15秒實時輪詢計時器
+        setInterval(fetchRealtimeRaceData, REFRESH_INTERVAL);
+    </script>
 </body>
 </html>
