@@ -1,0 +1,55 @@
+{
+  "race_info": {
+    "venue": "沙田",
+    "distance": "1400米",
+    "track": "草地 (C+3欄)",
+    "race_number": "第 8 場",
+    "update_time": "14:28:15"
+  },
+  "summary_recommendations": {
+    "solid": ["3號 金鎗六十", "1號 浪漫勇士", "7號 加州星球", "5號 將王"],
+    "heavy_market": ["3號 金鎗六十", "2號 幸運快車", "8號 福逸", "11號 旺蝦王"],
+    "outsiders": ["9號 速遞奇兵", "12號 飛輪閃耀"]
+  },
+  "featured_horse": {
+    "number": 12,
+    "name": "飛輪閃耀",
+    "trainer": {
+      "name": "桂福特",
+      "score": 82,
+      "note": "今季加權上名率: 35.4% | 特長: 專精中短途，近 3 賽日狀態大勇。"
+    },
+    "track_env": {
+      "score": 88,
+      "note": "1400m 2號檔 (歷史上名率 41.2%) | C+3欄跑法地利: 領放/貼欄馬極度佔優。"
+    },
+    "jockey": {
+      "name": "田泰安",
+      "score": 92,
+      "note": "騎練默契 (田+桂) 上名率高達 42% (⭐️ 深度信任) | 擅長轉彎推騎爆發。"
+    },
+    "horse_status": {
+      "status_tag": "健康良好",
+      "note": "從化特訓返港首仗 | 體重: 1130磅 (處最佳範圍)\n歷史傷病狀況正常，近期操練正常。"
+    },
+    "odds_dimension": {
+      "total_score": 91,
+      "t1": {
+        "value": "18.0 ➔ 15.0",
+        "score": 70
+      },
+      "t2": {
+        "value": "15.0 ➔ 9.5",
+        "score": 85
+      },
+      "t3": {
+        "value": "9.5 ➔ 4.8",
+        "score": 99
+      },
+      "cross_compare": {
+        "value": "賠率急瀉: -73.3%",
+        "note": "🔥 觸發「聰明資金 (Smart Money) 跨階段海量暴擊」訊號！"
+      }
+    }
+  }
+}
