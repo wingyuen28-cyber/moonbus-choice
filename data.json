@@ -1,110 +1,56 @@
 {
-  "last_updated": "第 10 場 - 喜鵲讓賽2026年9月27日, 星期日, 沙田, 17:45草地, \"C+3\" 賽道, 1200米, 好地至快地獎金: $2,840,000, 評分: 100-80, 第二班",
-  "venue": "沙田 / 跑馬地",
+  "race_date": "2026-09-27",
+  "venue": "沙田",
+  "track": "草地 (C+3欄)",
   "races": [
     {
-      "race_no": 1,
-      "post_time": "13:00",
+      "race_number": 1,
       "distance": "1200米",
-      "class": "第四班",
-      "track": "草地 - C+3 賽道",
+      "status": "已即時同步",
+      "update_time": "12:55",
+      "summary_recommendations": {
+        "solid": ["1號 幸運有您", "3號 精彩勇士", "5號 萬事快", "7號 英雄豪傑"],
+        "heavy_market": ["1號 幸運有您", "2號 狀元及第", "4號 閃電", "8號 盛世名駒"],
+        "outsiders": ["9號 方案", "11號 天足貓"]
+      },
       "horses": [
-        {
-          "horse_no": "1",
-          "horse_name": "",
-          "jockey": "風雲武士",
-          "trainer": "J027",
-          "draw": "135",
-          "weight": "艾道拿"
-        },
-        {
-          "horse_no": "2",
-          "horse_name": "",
-          "jockey": "綠族無限",
-          "trainer": "H338",
-          "draw": "132",
-          "weight": "奧爾民"
-        },
-        {
-          "horse_no": "3",
-          "horse_name": "",
-          "jockey": "扶搖勢勁",
-          "trainer": "K236",
-          "draw": "132",
-          "weight": "潘頓"
-        },
-        {
-          "horse_no": "4",
-          "horse_name": "",
-          "jockey": "信心星",
-          "trainer": "J161",
-          "draw": "132",
-          "weight": "黃智弘 (-3)"
-        },
-        {
-          "horse_no": "5",
-          "horse_name": "",
-          "jockey": "風再起時",
-          "trainer": "J534",
-          "draw": "130",
-          "weight": "梁家俊"
-        },
-        {
-          "horse_no": "6",
-          "horse_name": "",
-          "jockey": "競駿輝煌",
-          "trainer": "J195",
-          "draw": "130",
-          "weight": "楊明綸"
-        },
-        {
-          "horse_no": "7",
-          "horse_name": "",
-          "jockey": "維港智能",
-          "trainer": "G404",
-          "draw": "129",
-          "weight": "袁幸堯 (-10)"
-        },
-        {
-          "horse_no": "8",
-          "horse_name": "",
-          "jockey": "極上紗瓏",
-          "trainer": "K585",
-          "draw": "124",
-          "weight": "潘明輝"
-        },
-        {
-          "horse_no": "9",
-          "horse_name": "",
-          "jockey": "興馳千里",
-          "trainer": "K533",
-          "draw": "124",
-          "weight": "田泰安"
-        },
-        {
-          "horse_no": "10",
-          "horse_name": "",
-          "jockey": "增強",
-          "trainer": "J114",
-          "draw": "120",
-          "weight": "艾兆禮"
-        },
-        {
-          "horse_no": "11",
-          "horse_name": "",
-          "jockey": "巴基之勝",
-          "trainer": "J363",
-          "draw": "120",
-          "weight": "蔡明紹"
-        },
-        {
-          "horse_no": "12",
-          "horse_name": "",
-          "jockey": "好評如潮",
-          "trainer": "L223",
-          "draw": "119",
-          "weight": "黃寶妮 (-7)"
-        }
+        { "number": 1, "name": "幸運有您", "jockey": "潘頓", "trainer": "沈集成", "draw": 3, "score": 92, "odds_t3": 2.8, "status": "重票熱門" },
+        { "number": 2, "name": "狀元及第", "jockey": "布文", "trainer": "告東尼", "draw": 5, "score": 88, "odds_t3": 4.5, "status": "穩定" },
+        { "number": 3, "name": "精彩勇士", "jockey": "田泰安", "trainer": "韋達", "draw": 1, "score": 85, "odds_t3": 6.0, "status": "主力" },
+        { "number": 4, "name": "閃電", "jockey": "何澤堯", "trainer": "方嘉柏", "draw": 8, "score": 81, "odds_t3": 8.5, "status": "資金進場" },
+        { "number": 5, "name": "萬事快", "jockey": "班德禮", "trainer": "姚本輝", "draw": 2, "score": 80, "odds_t3": 11.0, "status": "穩定" },
+        { "number": 6, "name": "快狠準", "jockey": "霍宏聲", "trainer": "賀賢", "draw": 7, "score": 75, "odds_t3": 15.0, "status": "冷門" },
+        { "number": 7, "name": "英雄豪傑", "jockey": "希威森", "trainer": "文家良", "draw": 4, "score": 78, "odds_t3": 14.0, "status": "主力" },
+        { "number": 8, "name": "盛世名駒", "jockey": "艾兆禮", "trainer": "蔡約翰", "draw": 9, "score": 76, "odds_t3": 18.0, "status": "資金進場" },
+        { "number": 9, "name": "方案", "jockey": "董明朗", "trainer": "廖康銘", "draw": 11, "score": 74, "odds_t3": 25.0, "status": "⚡️ 異動爆冷" },
+        { "number": 10, "name": "天天得樂", "jockey": "巫顯東", "trainer": "鄭俊偉", "draw": 6, "score": 68, "odds_t3": 35.0, "status": "冷門" },
+        { "number": 11, "name": "天足貓", "jockey": "黃智弘", "trainer": "巫偉傑", "draw": 10, "score": 73, "odds_t3": 28.0, "status": "⚡️ 異動爆冷" },
+        { "number": 12, "name": "美麗多盈", "jockey": "鍾易禮", "trainer": "告東尼", "draw": 12, "score": 65, "odds_t3": 50.0, "status": "冷門" }
+      ]
+    },
+    {
+      "race_number": 2,
+      "distance": "1400米",
+      "status": "等待 T3 資金進入",
+      "update_time": "13:25",
+      "summary_recommendations": {
+        "solid": ["3號 金鎗六十", "1號 浪漫勇士", "7號 加州星球", "5號 將王"],
+        "heavy_market": ["3號 金鎗六十", "2號 幸運快車", "8號 福逸", "11號 旺蝦王"],
+        "outsiders": ["9號 速遞奇兵", "12號 飛輪閃耀"]
+      },
+      "horses": [
+        { "number": 1, "name": "浪漫勇士", "jockey": "麥道朗", "trainer": "沈集成", "draw": 4, "score": 94, "odds_t3": 2.1, "status": "主力" },
+        { "number": 2, "name": "幸運快車", "jockey": "艾兆禮", "trainer": "蔡約翰", "draw": 2, "score": 83, "odds_t3": 7.5, "status": "重票熱門" },
+        { "number": 3, "name": "金鎗六十", "jockey": "何澤堯", "trainer": "呂健威", "draw": 1, "score": 96, "odds_t3": 1.8, "status": "主力" },
+        { "number": 4, "name": "勝得威風", "jockey": "潘頓", "trainer": "蔡約翰", "draw": 6, "score": 80, "odds_t3": 9.0, "status": "穩定" },
+        { "number": 5, "name": "將王", "jockey": "布文", "trainer": "韋達", "draw": 8, "score": 82, "odds_t3": 12.0, "status": "主力" },
+        { "number": 6, "name": "勇猛神駒", "jockey": "田泰安", "trainer": "沈集成", "draw": 5, "score": 77, "odds_t3": 16.0, "status": "冷門" },
+        { "number": 7, "name": "加州星球", "jockey": "告東尼", "trainer": "巴度", "draw": 3, "score": 90, "odds_t3": 3.8, "status": "主力" },
+        { "number": 8, "name": "福逸", "jockey": "巴度", "trainer": "高伯新", "draw": 7, "score": 81, "odds_t3": 10.0, "status": "重票熱門" },
+        { "number": 9, "name": "速遞奇兵", "jockey": "班德禮", "trainer": "玖爾特", "draw": 10, "score": 75, "odds_t3": 22.0, "status": "⚡️ 異動爆冷" },
+        { "number": 10, "name": "超霸神駒", "jockey": "霍宏聲", "trainer": "苗禮德", "draw": 9, "score": 70, "odds_t3": 30.0, "status": "冷門" },
+        { "number": 11, "name": "旺蝦王", "jockey": "希威森", "trainer": "蔡約翰", "draw": 11, "score": 78, "odds_t3": 14.0, "status": "重票熱門" },
+        { "number": 12, "name": "飛輪閃耀", "jockey": "田泰安", "trainer": "桂福特", "draw": 12, "score": 76, "odds_t3": 18.0, "status": "⚡️ 異動爆冷" }
       ]
     }
   ]
