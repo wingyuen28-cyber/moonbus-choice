@@ -3,52 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moonbus Choice</title>
+    <title>Moonbus Choice 賽馬智能分析</title>
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
+            --bg: #0f172a;
+            --card: #1e293b;
             --accent: #38bdf8;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
+            --text: #f8fafc;
+            --sub-text: #94a3b8;
             --green: #22c55e;
-            --red: #ef4444;
-            --yellow: #eab308;
+            --gold: #f59e0b;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
             padding: 12px;
         }
 
-        .header {
+        .header-box {
+            background: var(--card);
+            padding: 12px;
+            border-radius: 10px;
             text-align: center;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #334155;
+            border: 1px solid #334155;
             margin-bottom: 12px;
         }
 
-        .header h1 { font-size: 1.3rem; margin: 0; color: var(--accent); }
-        .header p { font-size: 0.8rem; color: var(--text-sub); margin-top: 4px; }
+        .header-box h1 { margin: 0 0 6px 0; font-size: 1.2rem; color: var(--accent); }
+        .meta-tags { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; font-size: 0.8rem; }
+        .tag { background: #334155; padding: 3px 8px; border-radius: 4px; color: #e2e8f0; }
+        .tag-highlight { background: #0284c7; color: #fff; font-weight: bold; }
 
-        /* 場次選擇按鈕列 */
+        /* 場次切換列 */
         .race-nav {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             overflow-x: auto;
             padding-bottom: 8px;
             margin-bottom: 12px;
         }
 
         .race-btn {
-            background: #334155;
-            color: #fff;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 16px;
+            background: #1e293b;
+            color: #94a3b8;
+            border: 1px solid #334155;
+            padding: 8px 14px;
+            border-radius: 8px;
             font-weight: bold;
             font-size: 0.85rem;
             white-space: nowrap;
@@ -58,132 +61,71 @@
         .race-btn.active {
             background: var(--accent);
             color: #0f172a;
+            border-color: var(--accent);
         }
 
-        /* 總結推薦卡片 */
-        .summary-section {
+        /* 當前場次資訊條 */
+        .race-info-bar {
             background: linear-gradient(135deg, #1e1b4b, #312e81);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 16px;
-            border: 1px solid #4338ca;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
         }
 
-        .summary-title { font-size: 0.95rem; font-weight: bold; color: #a5b4fc; margin-bottom: 8px; }
-
-        .rec-box {
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 6px;
-            padding: 8px;
-            margin-bottom: 6px;
-        }
-
-        .rec-tag {
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 2px;
-        }
-
-        .tag-green { background: #15803d; color: #dcfce7; }
-        .tag-red { background: #b91c1c; color: #fee2e2; }
-        .tag-yellow { background: #a16207; color: #fef9c3; }
-
-        .horse-list { font-size: 0.9rem; font-weight: bold; color: #f1f5f9; }
-
-        /* 馬匹全體比較表格 */
+        /* 馬匹數據表 */
         .table-container {
             overflow-x: auto;
-            background: var(--card-bg);
-            border-radius: 10px;
+            background: var(--card);
+            border-radius: 8px;
             border: 1px solid #334155;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.8rem;
-        }
-
-        th {
-            background: #0f172a;
-            color: var(--accent);
-            padding: 8px;
-            border-bottom: 1px solid #334155;
-        }
-
-        td {
-            padding: 8px;
-            border-bottom: 1px solid #1e293b;
-        }
-
+        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left; }
+        th { background: #0f172a; color: var(--accent); padding: 8px; border-bottom: 1px solid #334155; }
+        td { padding: 8px; border-bottom: 1px solid #1e293b; }
         tr:nth-child(even) { background: rgba(255,255,255,0.02); }
 
-        .score-badge {
-            font-weight: bold;
-            color: var(--green);
-        }
-
-        .badge-cold {
-            background: #854d0e;
-            color: #fef08a;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-        }
+        .horse-name { font-weight: bold; font-size: 0.9rem; color: #fff; }
+        .draw-badge { background: #334155; padding: 1px 5px; border-radius: 3px; font-size: 0.75rem; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>🏇 Moonbus Choice 賽馬分析</h1>
-        <p id="day-info">載入賽事資料中...</p>
+    <div class="header-box">
+        <h1>🏇 Moonbus Choice 賽馬分析系統</h1>
+        <div class="meta-tags" id="day-header">
+            <span class="tag">載入賽事中...</span>
+        </div>
     </div>
 
-    <!-- 場次選擇列 (動態生成) -->
+    <!-- 動態生成場次按鈕 (1 ~ N 場) -->
     <div class="race-nav" id="race-nav"></div>
 
-    <!-- 當前場次的智能總結推薦 -->
-    <div class="summary-section">
-        <div class="summary-title" id="current-race-title">🎯 第 -- 場：智能總結推薦</div>
-        
-        <div class="rec-box">
-            <span class="rec-tag tag-green">🟢 最合理結果 (4隻)</span>
-            <div class="horse-list" id="rec-solid">--</div>
-        </div>
-
-        <div class="rec-box">
-            <span class="rec-tag tag-red">🔴 重票之選 (4隻)</span>
-            <div class="horse-list" id="rec-heavy">--</div>
-        </div>
-
-        <div class="rec-box">
-            <span class="rec-tag tag-yellow">⚡️ 爆冷之選 (2隻)</span>
-            <div class="horse-list" id="rec-outsider">--</div>
-        </div>
+    <!-- 當前場次細節 -->
+    <div class="race-info-bar">
+        <div><b id="current-race-title">第 -- 場</b></div>
+        <div id="current-race-detail" style="color: #c7d2fe;">開跑時間: --:-- | --米 | --</div>
     </div>
 
-    <!-- 該場全馬匹綜合比對表 -->
-    <div style="font-size: 0.9rem; font-weight: bold; margin-bottom: 8px; color: var(--text-sub);">
-        📊 全場參賽馬匹 6大維度比對表
-    </div>
-
+    <!-- 出賽馬匹排位表 -->
     <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th>馬號/馬名</th>
-                    <th>騎練/檔位</th>
-                    <th>綜合評分</th>
-                    <th>T3 賠率</th>
-                    <th>資金訊號</th>
+                    <th>馬號</th>
+                    <th>馬名</th>
+                    <th>騎師</th>
+                    <th>練馬師</th>
+                    <th>檔位</th>
+                    <th>負磅</th>
                 </tr>
             </thead>
             <tbody id="horse-table-body">
-                <!-- 動態注入馬匹資料 -->
+                <!-- 動態注入 -->
             </tbody>
         </table>
     </div>
@@ -197,17 +139,19 @@
                 const response = await fetch(`data.json?t=${new Date().getTime()}`);
                 globalData = await response.json();
 
-                // 顯示賽日日期與場地
-                document.getElementById('day-info').innerText = `${globalData.race_date} ${globalData.venue} ${globalData.track}`;
+                // 渲染頂部賽日資訊
+                document.getElementById('day-header').innerHTML = `
+                    <span class="tag tag-highlight">📅 ${globalData.race_date}</span>
+                    <span class="tag">📍 ${globalData.venue}</span>
+                    <span class="tag">🌱 地質: ${globalData.track_condition}</span>
+                    <span class="tag">🏁 共 ${globalData.total_races} 場賽事</span>
+                `;
 
-                // 生成場次按鈕
                 renderRaceNav();
-
-                // 預設渲染第 1 場
                 renderRace(0);
 
             } catch (err) {
-                console.error("資料載入失敗：", err);
+                console.error("載入失敗：", err);
             }
         }
 
@@ -231,54 +175,35 @@
         function renderRace(raceIndex) {
             const race = globalData.races[raceIndex];
 
-            // 更新場次標題
-            document.getElementById('current-race-title').innerText = `🎯 第 ${race.race_number} 場 (${race.distance}) - 智能推薦`;
+            // 更新場次頂部條
+            document.getElementById('current-race-title').innerText = `第 ${race.race_number} 場 (${race.class})`;
+            document.getElementById('current-race-detail').innerText = `⏰ 開跑: ${race.post_time} | 途程: ${race.distance} | ${race.course}`;
 
-            // 更新推薦名單
-            document.getElementById('rec-solid').innerText = race.summary_recommendations.solid.join('、');
-            document.getElementById('rec-heavy').innerText = race.summary_recommendations.heavy_market.join('、');
-            document.getElementById('rec-outsider').innerText = race.summary_recommendations.outsiders.join('、');
-
-            // 渲染馬匹表格
+            // 更新馬匹排位
             const tbody = document.getElementById('horse-table-body');
             tbody.innerHTML = '';
 
-            race.horses.forEach(h => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><b>${h.number}. ${h.name}</b></td>
-                    <td>${h.jockey}/${h.trainer} (${h.draw}檔)</td>
-                    <td class="score-badge">${h.score}分</td>
-                    <td><b>${h.odds_t3}</b></td>
-                    <td><span class="${h.status.includes('爆冷') ? 'badge-cold' : ''}">${h.status}</span></td>
-                `;
-                tbody.appendChild(row);
-            });
+            if (race.horses && race.horses.length > 0) {
+                race.horses.forEach(h => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><b>${h.number}</b></td>
+                        <td class="horse-name">${h.name}</td>
+                        <td>${h.jockey}</td>
+                        <td>${h.trainer}</td>
+                        <td><span class="draw-badge">${h.draw} 檔</span></td>
+                        <td>${h.weight} 磅</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:#94a3b8;">本場次尚未公佈排位資料或無參賽馬匹</td></tr>`;
+            }
         }
 
-        // 啟動 App
         initApp();
-
-        // 每 15 秒自動重新整理最新資料
+        // 15秒刷新一次
         setInterval(initApp, 15000);
     </script>
 </body>
 </html>
-
-async function loadRaceData() {
-  try:
-    // 加上 timestamp 防止瀏覽器快取舊資料
-    const response = await fetch(`data.json?t=${new Date().getTime()}`);
-    const raceData = await response.json();
-    
-    console.log("已載入最新賽事：", raceData);
-    // 呼叫你的 UI 渲染函數
-    renderRacecard(raceData);
-  catch (error) {
-    console.error("無法載入賽事資料：", error);
-  }
-}
-
-// 頁面載入時觸發
-window.onload = loadRaceData;
-
