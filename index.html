@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moonbus Choice 馬會官方同款排位表</title>
+    <title>Moonbus Choice 賽馬分析</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -11,7 +11,6 @@
             --accent: #38bdf8;
             --text: #f8fafc;
             --sub-text: #94a3b8;
-            --hkjc-blue: #003366;
         }
 
         body {
@@ -36,7 +35,6 @@
         .tag { background: #334155; padding: 2px 6px; border-radius: 4px; }
         .tag-highlight { background: #0284c7; font-weight: bold; }
 
-        /* 場次按鈕 */
         .race-nav {
             display: flex;
             gap: 6px;
@@ -63,7 +61,6 @@
             border-color: var(--accent);
         }
 
-        /* 賽事資訊欄 */
         .race-info-bar {
             background: #1e293b;
             border-left: 4px solid var(--accent);
@@ -74,7 +71,6 @@
             justify-content: space-between;
         }
 
-        /* 官方排位表格對齊 */
         .table-container {
             overflow-x: auto;
             background: var(--card);
@@ -88,43 +84,39 @@
         tr:nth-child(even) { background: rgba(255,255,255,0.02); }
 
         .horse-name { text-align: left; font-weight: bold; color: #fff; font-size: 0.85rem; }
-        .draw-badge { background: #334155; padding: 1px 5px; border-radius: 3px; }
+        .draw-badge { background: #334155; padding: 1px 6px; border-radius: 3px; color: #38bdf8; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="header-box">
-        <h1>🏇 Moonbus Choice (官方格式排位表)</h1>
+        <h1>🏇 Moonbus Choice 賽馬分析</h1>
         <div class="meta-tags" id="day-header">
-            <span class="tag">載入賽事中...</span>
+            <span class="tag">載入賽事資訊中...</span>
         </div>
     </div>
 
-    <!-- 場次按鈕 -->
     <div class="race-nav" id="race-nav"></div>
 
-    <!-- 賽事簡介 -->
     <div class="race-info-bar">
         <div><b id="current-race-title">第 -- 場</b></div>
         <div id="current-race-detail" style="color: #94a3b8;">開跑時間: --:--</div>
     </div>
 
-    <!-- 官方標準排位表 -->
     <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th>馬號</th>
+                    <th style="width: 35px;">馬號</th>
                     <th style="text-align: left;">馬名 (烙號)</th>
                     <th>騎師</th>
                     <th>檔位</th>
                     <th>負磅</th>
                     <th>練馬師</th>
-                    <th>評分</th>
                 </tr>
             </thead>
             <tbody id="horse-table-body">
-                <!-- 動態注入 -->
+                <!-- 動態注入內容 -->
             </tbody>
         </table>
     </div>
@@ -142,7 +134,7 @@
                     <span class="tag tag-highlight">📅 ${globalData.race_date}</span>
                     <span class="tag">📍 ${globalData.venue}</span>
                     <span class="tag">🌱 地質: ${globalData.track_condition}</span>
-                    <span class="tag">🏁 共 ${globalData.total_races} 場</span>
+                    <span class="tag">🏁 全日 ${globalData.total_races} 場</span>
                 `;
 
                 renderRaceNav();
@@ -187,14 +179,13 @@
                         <td class="horse-name">${h.name} <small style="color:#64748b;">(${h.brand})</small></td>
                         <td>${h.jockey}</td>
                         <td><span class="draw-badge">${h.draw}</span></td>
-                        <td>${h.weight}</td>
+                        <td>${h.weight} 磅</td>
                         <td>${h.trainer}</td>
-                        <td>${h.rating}</td>
                     `;
                     tbody.appendChild(row);
                 });
             } else {
-                tbody.innerHTML = `<tr><td colspan="7" style="padding:20px; color:#94a3b8;">本場次暫無排位資料</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="padding:20px; color:#94a3b8;">本場次暫無排位資料或已完賽存檔中</td></tr>`;
             }
         }
 
