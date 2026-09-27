@@ -53,3 +53,21 @@
     }
   }
 }
+
+async function loadRaceData() {
+  try:
+    // 加上 timestamp 防止瀏覽器快取舊資料
+    const response = await fetch(`data.json?t=${new Date().getTime()}`);
+    const raceData = await response.json();
+    
+    console.log("已載入最新賽事：", raceData);
+    // 呼叫你的 UI 渲染函數
+    renderRacecard(raceData);
+  catch (error) {
+    console.error("無法載入賽事資料：", error);
+  }
+}
+
+// 頁面載入時觸發
+window.onload = loadRaceData;
+
